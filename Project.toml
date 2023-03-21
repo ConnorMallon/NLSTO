@@ -1,7 +1,3 @@
-name = "NLSTO"
-uuid = "060dd6a2-94a0-41e2-b6d1-76de23630def"
-version = "0.1.0"
-
 [deps]
 AbstractDifferentiation = "c29ec348-61ec-40c8-8164-b8c60e9d9f3d"
 AbstractTrees = "1520ce14-60c1-5f80-bbc7-55ef81b5835c"
