@@ -79,7 +79,7 @@ function get_FE_forms(problem::ProblemType{:heat_simp},Q,α₂)
 
 	function a( u,v,ϕ)
 		ϕₕ = ϕ_to_ϕₕ(ϕ)
-		∫( α₂ +  (1-α₂) * ( power ∘ (ϕₕ) ) * ∇(v)⋅∇(u) )dΩ_bg
+		∫( ( α₂ +  (1-α₂) * ( power ∘ (ϕₕ) ) )  * ∇(v)⋅∇(u) )dΩ_bg
 	end
 
 	function l( v, ϕ )	

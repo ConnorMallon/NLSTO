@@ -16,8 +16,8 @@ function RunDriver(var_params)
   # Initialise parameters
   println("Prior Initialising")
   n_holes= n_holes#2#4#2#3#4
-  Vi=0.6
-  pP   = nucleate_holes(n_holes,bgmodel,Vi,Vbgϕ,problem) 
+  #Vi=0.6
+  pP   = nucleate_holes(n_holes,bgmodel,Vₘₐₓ,Vbgϕ,problem) 
   pN0,N = NetworkInit(bgmodel,nf,nd,pP,image_size)
   pN = pN0
   p0 = initialise_p(pP,pN,prior)
