@@ -1,6 +1,6 @@
 function RunDriver(var_params)
 
-  n_cells,α₂,nf,nd,imagesizeName,n_holes,priorName,methodName,optimiserName,problemName,Vₘₐₓ= var_params
+  n_cells,α₂,nf,nd,imagesizeName,n_holes,priorName,methodName,optimiserName,problemName,Vₘₐₓ,iterations= var_params
   image_size = ImageSizeType{Symbol(imagesizeName)}()
   prior = PriorType{Symbol(priorName)}() 
   method = MethodType{Symbol(methodName)}()
@@ -77,12 +77,17 @@ function RunDriver(var_params)
 
   # Optimise Topology 
   println("Optimising Topology")
-  iterations = 3000
   optimisation_results = execute_optimisation(p_to_j(prior,method,problem),Vol_constr_ub(prior,method,problem,Vₘₐₓ),Vol_constr_lb(prior,method,problem,Vₘᵢₙ) ,copy(p0),iterations,optimiser,problem)
   fcalls,gcalls,iters,jf,pf,js,ts = optimisation_results
-  Ω0=""
-  Ωf=""
-  fcalls,gcalls,iters,jf,p0,pf,Ω0,Ωf,js,ts
+
+  p=pf
+  ϕₙ₁  = p_to_ϕₙ₁(p,prior)      # parameters (p) to unfiltered unconstrained nodal values (s)
+  ϕᵧ₂ = ϕₙ₁_to_ϕᵧ₂(ϕₙ₁)     # unfiltered unconstrained nodal values (s) to filtered unconstrained values (ϕᵤ)     
+  ϕₛ₃ = ϕᵧ₂_to_ϕₛ₃(ϕᵧ₂,MethodType{Symbol("unconstrained")}(),problem)       
+  ϕ  = ϕₛ₃_to_ϕ(ϕₛ₃,method) 
+  _,(cutgeo1,cutgeo2,order, Ωf,Ω2,Ω1_act,Ω2_act)  = get_geo_params(ϕ,Vbgϕ)
+
+  fcalls,gcalls,iters,jf,p0,pf,Ωf,js,ts
 
 end # function RunDriver
 
